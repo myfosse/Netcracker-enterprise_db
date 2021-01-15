@@ -1,0 +1,15 @@
+[
+  {
+    "employee": {
+      "name": "Andrey",
+      "surname": "Egorov",
+      "birthdate": null,
+      "amountOfHolidays": 100,
+      "insuranceNumber": 1234567890,
+      "email": null,
+      "roles": null
+    },
+    "startDate": null,
+    "endDate": null
+  }
+]

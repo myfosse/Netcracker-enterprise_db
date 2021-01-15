@@ -1,0 +1,24 @@
+[
+  {
+    "employee": {
+      "name": "Andrey",
+      "surname": "Egorov",
+      "birthdate": null,
+      "amountOfHolidays": 100,
+      "insuranceNumber": 1234567890,
+      "email": null,
+      "roles": null
+    },
+    "department": {
+      "name": "Department",
+      "country": "Belarus",
+      "city": "Minsk"
+    },
+    "position": {
+      "specialty": "Java",
+      "minSalary": 1500
+    },
+    "startDate": null,
+    "endDate": null
+  }
+]
