@@ -19,17 +19,20 @@ public class NewsController {
     this.newsService = newsService;
   }
 
-  @PostMapping("/add")
+  @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final NewsDTO newsDTO) {
     return ResponseEntity.ok(newsService.save(newsDTO));
   }
 
-  @PutMapping("/update")
+  @PutMapping("/admin/update")
   public @ResponseBody ResponseEntity<?> update(@Valid @RequestBody final NewsDTO newsDTO) {
+    if(newsDTO.getId() == null) {
+      return ResponseEntity.badRequest().body("Unknown id");
+    }
     return ResponseEntity.ok(newsService.update(newsDTO));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/all/{id}")
   public @ResponseBody ResponseEntity<?> findById(@PathVariable("id") final Long id) {
     return ResponseEntity.ok(newsService.findById(id));
   }
@@ -45,7 +48,7 @@ public class NewsController {
     return ResponseEntity.ok(newsService.getAllByAdminId(adminId));
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/admin/delete/{id}")
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     newsService.deleteById(id);
     return ResponseEntity.ok("News deleted");

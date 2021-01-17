@@ -5,13 +5,13 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 
 @Data
+@ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BonusDTO extends BaseDTO {
 
-  @NotNull
-  private EmployeeDTO employee;
+  @NotNull private EmployeeDTO employee;
 
   private int month;
 

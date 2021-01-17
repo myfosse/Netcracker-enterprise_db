@@ -20,33 +20,36 @@ public class HolidayController {
     this.holidayService = holidayService;
   }
 
-  @PostMapping("/add")
+  @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final HolidayDTO holidayDTO) {
     return ResponseEntity.ok(holidayService.save(holidayDTO));
   }
 
-  @PutMapping("/update")
+  @PutMapping("/admin/update")
   public @ResponseBody ResponseEntity<?> update(@Valid @RequestBody final HolidayDTO holidayDTO) {
+    if(holidayDTO.getId() == null) {
+      return ResponseEntity.badRequest().body("Unknown id");
+    }
     return ResponseEntity.ok(holidayService.update(holidayDTO));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/user/{id}")
   public @ResponseBody ResponseEntity<?> findById(@PathVariable("id") final Long id) {
     return ResponseEntity.ok(holidayService.findById(id));
   }
 
-  @GetMapping("/all")
+  @GetMapping("/user/all")
   public @ResponseBody ResponseEntity<?> getAll() {
     return ResponseEntity.ok(holidayService.getAll());
   }
 
-  @GetMapping("/all/{employeeId}")
+  @GetMapping("/user/all/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByAdminId(
       @PathVariable("employeeId") final Long adminId) {
     return ResponseEntity.ok(holidayService.getAllByEmployeeId(adminId));
   }
 
-  @GetMapping("/all/finished")
+  @GetMapping("/user/finished")
   public @ResponseBody ResponseEntity<?> getAllFinishedHolidays(
       @Param(value = "finished") final boolean finished) {
     return ResponseEntity.ok(
@@ -55,7 +58,7 @@ public class HolidayController {
             : holidayService.getAllNotFinishedHolidays());
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/admin/delete/{id}")
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     holidayService.deleteById(id);
     return ResponseEntity.ok("Holiday deleted");

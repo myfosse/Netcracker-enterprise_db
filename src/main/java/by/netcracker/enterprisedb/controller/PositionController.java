@@ -19,17 +19,20 @@ public class PositionController {
     this.positionService = positionService;
   }
 
-  @PostMapping("/add")
+  @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final PositionDTO positionDTO) {
     return ResponseEntity.ok(positionService.save(positionDTO));
   }
 
-  @PutMapping("/update")
+  @PutMapping("/admin/update")
   public @ResponseBody ResponseEntity<?> update(@Valid @RequestBody final PositionDTO positionDTO) {
+    if(positionDTO.getId() == null) {
+      return ResponseEntity.badRequest().body("Unknown id");
+    }
     return ResponseEntity.ok(positionService.update(positionDTO));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/all/{id}")
   public @ResponseBody ResponseEntity<?> findById(@PathVariable("id") final Long id) {
     return ResponseEntity.ok(positionService.findById(id));
   }
@@ -39,7 +42,7 @@ public class PositionController {
     return ResponseEntity.ok(positionService.getAll());
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/admin/delete/{id}")
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     positionService.deleteById(id);
     return ResponseEntity.ok("Position deleted");

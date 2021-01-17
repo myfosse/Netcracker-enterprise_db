@@ -19,32 +19,35 @@ public class CareerController {
     this.careerService = careerService;
   }
 
-  @PostMapping("/add")
+  @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final CareerDTO careerDTO) {
     return ResponseEntity.ok(careerService.save(careerDTO));
   }
 
-  @PutMapping("/update")
+  @PutMapping("/admin/update")
   public @ResponseBody ResponseEntity<?> update(@Valid @RequestBody final CareerDTO careerDTO) {
+    if(careerDTO.getId() == null) {
+      return ResponseEntity.badRequest().body("Unknown id");
+    }
     return ResponseEntity.ok(careerService.update(careerDTO));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/admin/{id}")
   public @ResponseBody ResponseEntity<?> findById(@PathVariable("id") final Long id) {
     return ResponseEntity.ok(careerService.findById(id));
   }
 
-  @GetMapping("/all")
+  @GetMapping("/admin/all")
   public @ResponseBody ResponseEntity<?> getAll() {
     return ResponseEntity.ok(careerService.getAll());
   }
 
-  @GetMapping("/all/{employeeId}")
+  @GetMapping("/user/all/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByEmployeeID(@PathVariable("employeeId") final Long employeeId) {
     return ResponseEntity.ok(careerService.getAllByEmployeeId(employeeId));
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/admin/delete/{id}")
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     careerService.deleteById(id);
     return ResponseEntity.ok("Career deleted");

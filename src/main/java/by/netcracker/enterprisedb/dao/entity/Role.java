@@ -22,4 +22,9 @@ public class Role extends BaseEntity implements GrantedAuthority {
   public String getAuthority() {
     return name.toString();
   }
+
+  public Role(Long id, ERole name) {
+    super(id);
+    this.name = name;
+  }
 }

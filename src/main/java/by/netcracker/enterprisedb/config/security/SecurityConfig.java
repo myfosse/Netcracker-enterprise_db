@@ -43,10 +43,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         .antMatchers(
             PREFIX + "/auth/sign-up",
+            PREFIX + "/department/all/**",
             PREFIX + "/news/all/**",
-            PREFIX + "/department/all",
-            PREFIX + "/position/all")
+            PREFIX + "/position/all/**")
         .anonymous()
+        .antMatchers(
+            PREFIX + "/auth/sign-up",
+            PREFIX + "/department/all/**",
+            PREFIX + "/news/all/**",
+            PREFIX + "/position/all/**")
+        .permitAll()
+        .antMatchers(
+            PREFIX + "/bonus/user/**}",
+            PREFIX + "/career/user/**",
+            PREFIX + "/employee/user/**",
+            PREFIX + "/holiday/user/**",
+            PREFIX + "/news/user/**",
+            PREFIX + "/request/user/**}")
+        .hasAuthority("ROLE_USER")
         .antMatchers(
             PREFIX + "/bonus/**",
             PREFIX + "/career/**",
@@ -56,16 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             PREFIX + "/news/**",
             PREFIX + "/position/**",
             PREFIX + "/request/**")
-        .hasAuthority("ADMIN")
-        .antMatchers(
-            PREFIX + "/bonus/{employeeId}",
-            PREFIX + "/career/{employeeId}",
-            PREFIX + "/employee/{id}",
-            PREFIX + "/employee/update",
-            PREFIX + "/holiday/all/**",
-            PREFIX + "/request/add",
-            PREFIX + "/request/all/{employeeId}")
-        .hasAuthority("USER")
+        .hasAuthority("ROLE_ADMIN")
         .and()
         .httpBasic()
         .and()

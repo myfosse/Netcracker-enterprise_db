@@ -2,6 +2,7 @@ package by.netcracker.enterprisedb.dto.model;
 
 import by.netcracker.enterprisedb.dao.entity.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,5 +40,5 @@ public class EmployeeDTO extends BaseDTO {
 
   @NotBlank
   @NotNull
-  private Set<Role> roles = new HashSet<>();
+  private Set<Role> roles;
 }

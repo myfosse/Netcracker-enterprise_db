@@ -19,17 +19,20 @@ public class DepartmentController {
     this.departmentService = departmentService;
   }
 
-  @PostMapping("/add")
+  @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final DepartmentDTO departmentDTO) {
     return ResponseEntity.ok(departmentService.save(departmentDTO));
   }
 
-  @PutMapping("/update")
+  @PutMapping("/admin/update")
   public @ResponseBody ResponseEntity<?> update(@Valid @RequestBody final DepartmentDTO departmentDTO) {
+    if(departmentDTO.getId() == null) {
+      return ResponseEntity.badRequest().body("Unknown id");
+    }
     return ResponseEntity.ok(departmentService.update(departmentDTO));
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/all/{id}")
   public @ResponseBody ResponseEntity<?> findById(@PathVariable("id") final Long id) {
     return ResponseEntity.ok(departmentService.findById(id));
   }
@@ -39,7 +42,7 @@ public class DepartmentController {
     return ResponseEntity.ok(departmentService.getAll());
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/admin/delete/{id}")
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     departmentService.deleteById(id);
     return ResponseEntity.ok("Department deleted");

@@ -13,7 +13,8 @@ CREATE TABLE public.employee
     birthdate          date    NOT NULL,
     amount_of_holidays int4    NOT NULL,
     insurance_number   int4    NOT NULL,
-    is_admin           bool    NOT NULL DEFAULT false,
+    email              varchar NOT NULL,
+    password           varchar NOT NULL,
     CONSTRAINT employee_amount_of_holidays_check CHECK ((amount_of_holidays >= 0)),
     CONSTRAINT employee_birthdate_check CHECK ((birthdate > '1900-01-01'::date)),
     CONSTRAINT employee_pk PRIMARY KEY (id)

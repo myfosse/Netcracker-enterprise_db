@@ -1,4 +1,4 @@
-package by.netcracker.enterprisedb.request;
+package by.netcracker.enterprisedb.payload.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignupRequest {
+public class SignUpRequest {
 
   @NotBlank
   @Size(min = 2, max = 100)
@@ -33,8 +33,6 @@ public class SignupRequest {
   @JsonFormat(pattern = "yyyy-MM-dd")
   @NotNull
   private LocalDate birthdate;
-
-  private int amountOfHolidays;
 
   private int insuranceNumber;
 

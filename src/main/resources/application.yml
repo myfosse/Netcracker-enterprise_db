@@ -1,26 +1,17 @@
 server:
-  port: 8090
+  port: 8080
 
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:enterprise-db}
-    username: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:postgres}
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     platform: POSTGRESQL
     driver-class-name: org.postgresql.Driver
     initialization-mode: embedded
   jpa:
     hibernate:
       ddl-auto: update
-
-  flyway:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:enterprise-db}
-    user: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:postgres}
-    validate-on-migrate: false
-    baseline-on-migrate: true
-    locations: classpath:db/migration
-
 
 logging:
   level:
