@@ -1,12 +1,13 @@
 [
   {
     "employee": {
-      "name": "Andrey",
-      "surname": "Egorov",
+      "name": "String",
+      "surname": "String",
+      "email": "String@mail.ru",
       "birthdate": null,
-      "amountOfHolidays": 100,
-      "insuranceNumber": 1234567890,
-      "email": null,
+      "amountOfHolidays": 1,
+      "insuranceNumber": 1,
+      "password": "String",
       "roles": null
     },
     "department": {
@@ -18,6 +19,9 @@
       "specialty": "Java",
       "minSalary": 1500
     },
+    "emp_id": 1,
+    "dept_id": 1,
+    "pos_id": 1,
     "startDate": null,
     "endDate": null
   }

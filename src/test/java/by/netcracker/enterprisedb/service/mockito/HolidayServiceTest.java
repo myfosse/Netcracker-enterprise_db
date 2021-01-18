@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -33,8 +34,11 @@ public class HolidayServiceTest extends BaseServiceTest<Holiday, HolidayDTO> {
   }
 
   private final HolidayDTO holidayDTO =
-      new HolidayDTO(new EmployeeDTO(
-              "Andrey", "Egorov", null, 100, 1234567890, null, null), null, null);
+      new HolidayDTO(
+          new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null),
+          1L,
+          null,
+          null);
 
   @Autowired private HolidayService holidayService;
 

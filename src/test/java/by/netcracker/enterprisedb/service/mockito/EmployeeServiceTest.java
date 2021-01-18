@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -29,8 +30,7 @@ public class EmployeeServiceTest extends BaseServiceTest<Employee, EmployeeDTO> 
   }
 
   private final EmployeeDTO outputEmployeeDTO =
-          new EmployeeDTO(
-                  "Andrey", "Egorov", null, 100, 1234567890, null, null);
+      new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null);
 
   @Autowired private EmployeeService employeeService;
 

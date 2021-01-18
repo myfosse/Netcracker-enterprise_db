@@ -3,6 +3,7 @@ package by.netcracker.enterprisedb.dao.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,6 +24,12 @@ public class Request extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "adm_id")
   private Employee admin;
+
+  @Column(insertable = false, updatable = false)
+  private Long emp_id;
+
+  @Column(insertable = false, updatable = false)
+  private Long adm_id;
 
   @NotBlank
   private String title;

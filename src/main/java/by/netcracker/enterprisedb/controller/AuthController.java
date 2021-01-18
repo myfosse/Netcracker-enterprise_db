@@ -1,17 +1,18 @@
 package by.netcracker.enterprisedb.controller;
 
-import by.netcracker.enterprisedb.converter.request.SignUpRequestToUserConverter;
 import by.netcracker.enterprisedb.dao.entity.ERole;
 import by.netcracker.enterprisedb.dao.entity.Role;
-import by.netcracker.enterprisedb.payload.request.SignUpRequest;
+import by.netcracker.enterprisedb.dto.model.EmployeeDTO;
 import by.netcracker.enterprisedb.service.EmployeeService;
 import by.netcracker.enterprisedb.service.RoleService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 /** @author Andrey Egorov */
 @RestController
@@ -30,19 +31,20 @@ public class AuthController {
     this.encoder = encoder;
   }
 
+  @ApiOperation(value = "Sign up", notes = "This method allows anybody register on site")
   @PostMapping("/sign-up")
   public @ResponseBody ResponseEntity<?> registerUser(
-      @Valid @RequestBody final SignUpRequest signUpRequest) {
+      @Valid @RequestBody final EmployeeDTO employeeDTO) {
 
-    if (employeeService.existsByEmail(signUpRequest.getEmail())) {
+    if (employeeService.existsByEmail(employeeDTO.getEmail())) {
       return ResponseEntity.badRequest().body(("Error: Email is already in use!"));
     }
 
-    if (!signUpRequest.getPassword().equals(signUpRequest.getPasswordConfirmation())) {
+    if (!employeeDTO.getPassword().equals(employeeDTO.getPasswordConfirmation())) {
       return ResponseEntity.badRequest().body("Error: Passwords doesn't match!");
     }
 
-    if (signUpRequest.getPassword().equals(signUpRequest.getEmail())) {
+    if (employeeDTO.getPassword().equals(employeeDTO.getEmail())) {
       return ResponseEntity.badRequest().body("Error: Password must not match email!");
     }
 
@@ -51,9 +53,9 @@ public class AuthController {
             .findByName(ERole.ROLE_USER)
             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 
-    employeeService.save(
-        SignUpRequestToUserConverter.convertSignUpRequestToUser(signUpRequest, userRole, encoder));
+    employeeDTO.setRoles(Set.of(userRole));
+    employeeDTO.setPassword(encoder.encode(employeeDTO.getPassword()));
 
-    return ResponseEntity.ok("Created");
+    return ResponseEntity.ok(employeeService.save(employeeDTO));
   }
 }

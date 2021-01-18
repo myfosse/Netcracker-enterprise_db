@@ -12,6 +12,9 @@ public class CareerConverterDTO {
     CareerDTO careerDTO =
         CareerDTO.builder()
             .employee(EmployeeConverterDTO.convertEntityToDTO(careerEntity.getEmployee()))
+            .emp_id(careerEntity.getEmp_id())
+            .dept_id(careerEntity.getDept_id())
+            .pos_id(careerEntity.getPos_id())
             .department(DepartmentConverterDTO.convertEntityToDTO(careerEntity.getDepartment()))
             .position(PositionConverterDTO.convertEntityToDTO(careerEntity.getPosition()))
             .startDate(careerEntity.getStartDate())
@@ -25,6 +28,9 @@ public class CareerConverterDTO {
     Career career =
         Career.builder()
             .employee(EmployeeConverterDTO.convertDTOToEntity(careerDTO.getEmployee()))
+            .emp_id(careerDTO.getEmp_id())
+            .dept_id(careerDTO.getDept_id())
+            .pos_id(careerDTO.getPos_id())
             .department(DepartmentConverterDTO.convertDTOToEntity(careerDTO.getDepartment()))
             .position(PositionConverterDTO.convertDTOToEntity(careerDTO.getPosition()))
             .startDate(careerDTO.getStartDate())

@@ -18,6 +18,7 @@ public class EmployeeConverterDTO {
             .insuranceNumber(employeeEntity.getInsuranceNumber())
             .roles(employeeEntity.getRoles())
             .email(employeeEntity.getEmail())
+            .password(employeeEntity.getPassword())
             .build();
     employeeDTO.setId(employeeEntity.getId());
     return employeeDTO;
@@ -33,6 +34,7 @@ public class EmployeeConverterDTO {
             .insuranceNumber(employeeDTO.getInsuranceNumber())
             .roles(employeeDTO.getRoles())
             .email(employeeDTO.getEmail())
+            .password(employeeDTO.getPassword())
             .build();
     employee.setId(employeeDTO.getId());
     return employee;

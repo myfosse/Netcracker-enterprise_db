@@ -1,16 +1,18 @@
 [
   {
     "employee": {
-      "name": "Andrey",
-      "surname": "Egorov",
+      "name": "String",
+      "surname": "String",
+      "email": "String@mail.ru",
       "birthdate": null,
-      "amountOfHolidays": 100,
-      "insuranceNumber": 1234567890,
-      "email": null,
+      "amountOfHolidays": 1,
+      "insuranceNumber": 1,
+      "password": "String",
       "roles": null
     },
+    "emp_id": 1,
     "month": 1,
-    "year": 2020,
-    "value": 1500
+    "year": 1,
+    "value": 1
   }
 ]

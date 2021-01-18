@@ -31,11 +31,11 @@ public class BonusServiceTest extends BaseServiceTest<Bonus, BonusDTO> {
 
   private final BonusDTO outputBonusDTO =
       new BonusDTO(
-          new EmployeeDTO(
-              "Andrey", "Egorov", null, 100, 1234567890, null, null),
+          new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null),
+          1L,
           1,
-          2020,
-          1500);
+          1,
+          1);
 
   @Autowired private BonusService bonusService;
 

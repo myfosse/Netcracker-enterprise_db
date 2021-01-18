@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -33,8 +34,10 @@ public class RequestServiceTest extends BaseServiceTest<Request, RequestDTO> {
 
   private final RequestDTO outputRequestDTO =
       new RequestDTO(
-          new EmployeeDTO("Andrey", "Egorov", null, 100, 1234567890, null, null),
-          new EmployeeDTO("Andrey", "Egorov", null, 100, 1234567890, null, null),
+          new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null),
+          new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null),
+          1L,
+          1L,
           "Title",
           "Text",
           null,

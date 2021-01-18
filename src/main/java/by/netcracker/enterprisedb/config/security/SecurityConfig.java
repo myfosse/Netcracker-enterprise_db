@@ -41,17 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .antMatchers(
-            PREFIX + "/auth/sign-up",
-            PREFIX + "/department/all/**",
-            PREFIX + "/news/all/**",
-            PREFIX + "/position/all/**")
+        .antMatchers(PREFIX + "/auth/sign-up")
         .anonymous()
-        .antMatchers(
-            PREFIX + "/auth/sign-up",
-            PREFIX + "/department/all/**",
-            PREFIX + "/news/all/**",
-            PREFIX + "/position/all/**")
+        .antMatchers(PREFIX + "/department/all/**",
+                PREFIX + "/news/all/**",
+                PREFIX + "/position/all/**")
         .permitAll()
         .antMatchers(
             PREFIX + "/bonus/user/**}",
@@ -62,14 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             PREFIX + "/request/user/**}")
         .hasAuthority("ROLE_USER")
         .antMatchers(
-            PREFIX + "/bonus/**",
-            PREFIX + "/career/**",
-            PREFIX + "/department/**",
-            PREFIX + "/employee/**",
-            PREFIX + "/holiday/**",
-            PREFIX + "/news/**",
-            PREFIX + "/position/**",
-            PREFIX + "/request/**")
+            PREFIX + "/bonus/admin/**",
+            PREFIX + "/career/admin/**",
+            PREFIX + "/department/admin/**",
+            PREFIX + "/employee/admin/**",
+            PREFIX + "/holiday/admin/**",
+            PREFIX + "/news/admin/**",
+            PREFIX + "/position/admin/**",
+            PREFIX + "/request/admin/**")
         .hasAuthority("ROLE_ADMIN")
         .and()
         .httpBasic()

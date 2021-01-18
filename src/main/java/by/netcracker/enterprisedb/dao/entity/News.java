@@ -3,6 +3,7 @@ package by.netcracker.enterprisedb.dao.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,8 +20,11 @@ public class News extends BaseEntity {
   @JoinColumn(name = "adm_id")
   private Employee admin;
 
+  @Column(insertable = false, updatable = false)
+  private Long adm_id;
 
   private String title;
+
   private String text;
 
   @JsonFormat(pattern = "yyyy-MM-dd")
