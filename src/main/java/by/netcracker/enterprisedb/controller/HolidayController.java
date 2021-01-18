@@ -3,10 +3,12 @@ package by.netcracker.enterprisedb.controller;
 import by.netcracker.enterprisedb.dto.model.HolidayDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.HolidayService;
+import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -60,8 +62,8 @@ public class HolidayController {
       notes = "This method allows admin or user get all holidays by employee ID")
   @GetMapping("/user/all/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByAdminId(
-      @PathVariable("employeeId") final Long adminId) {
-    return ResponseEntity.ok(holidayService.getAllByEmployeeId(adminId));
+      @PathVariable("employeeId") final Long employeeId) {
+    return ResponseEntity.ok(holidayService.getAllByEmployeeId(employeeId));
   }
 
   @ApiOperation(

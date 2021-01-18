@@ -3,10 +3,12 @@ package by.netcracker.enterprisedb.controller;
 import by.netcracker.enterprisedb.dto.model.BonusDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.BonusService;
+import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -60,7 +62,9 @@ public class BonusController {
   @GetMapping("/user/all/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByEmployeeID(
       @PathVariable("employeeId") final Long employeeId) {
-    return ResponseEntity.ok(bonusService.getAllByEmployeeId(employeeId));
+    return getAuthenticationUserID().equals(employeeId)
+        ? ResponseEntity.ok(bonusService.getAllByEmployeeId(employeeId))
+        : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
 
   @ApiOperation(value = "Delete bonus by ID", notes = "This method allows admin delete bonus by ID")
@@ -68,5 +72,10 @@ public class BonusController {
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     bonusService.deleteById(id);
     return ResponseEntity.ok(new MessageResponse("Bonus was deleted"));
+  }
+
+  public Long getAuthenticationUserID() {
+    return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+        .getId();
   }
 }

@@ -46,19 +46,21 @@ public class EmployeeDTO extends BaseDTO {
   @PositiveOrZero(message = "Amount of holidays must be greater than or equal to 0")
   private int amountOfHolidays;
 
+  @ApiModelProperty(position = 7)
   @Pattern(
       regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$",
       message = "Password must contain lowercase and uppercase latin letters, numbers")
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
+  @ApiModelProperty(position = 8)
   @Pattern(
       regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$",
       message = "Password must contain lowercase and uppercase latin letters, numbers")
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String passwordConfirmation;
 
-  @ApiModelProperty(position = 7, hidden = true)
+  @ApiModelProperty(position = 9, hidden = true)
   @NotBlank
   @NotNull
   private Set<Role> roles;

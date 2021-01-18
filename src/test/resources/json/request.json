@@ -24,7 +24,6 @@
     "adm_id": 1,
     "title": "Title",
     "text": "Text",
-    "sendDate": null,
-    "agreed": false
+    "sendDate": null
   }
 ]

@@ -3,9 +3,11 @@ package by.netcracker.enterprisedb.controller;
 import by.netcracker.enterprisedb.dto.model.CareerDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.CareerService;
+import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -58,7 +60,9 @@ public class CareerController {
   @GetMapping("/user/all/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByEmployeeID(
       @PathVariable("employeeId") final Long employeeId) {
-    return ResponseEntity.ok(careerService.getAllByEmployeeId(employeeId));
+    return getAuthenticationUserID().equals(employeeId)
+            ? ResponseEntity.ok(careerService.getAllByEmployeeId(employeeId))
+            : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
 
   @ApiOperation(
@@ -68,5 +72,10 @@ public class CareerController {
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     careerService.deleteById(id);
     return ResponseEntity.ok(new MessageResponse("Career deleted"));
+  }
+
+  public Long getAuthenticationUserID() {
+    return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+            .getId();
   }
 }

@@ -40,8 +40,7 @@ public class RequestServiceTest extends BaseServiceTest<Request, RequestDTO> {
           1L,
           "Title",
           "Text",
-          null,
-          false);
+          null);
 
   @Autowired private RequestService requestService;
 

@@ -3,9 +3,11 @@ package by.netcracker.enterprisedb.controller;
 import by.netcracker.enterprisedb.dto.model.RequestDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.RequestService;
+import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,7 +27,8 @@ public class RequestController {
       value = "Add new request",
       notes = "This method allows admin or user add new request")
   @PostMapping("/user/add")
-  public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final RequestDTO requestDTO) {
+  public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody RequestDTO requestDTO) {
+    requestDTO.setEmp_id(getAuthenticationUserID());
     return ResponseEntity.ok(requestService.save(requestDTO));
   }
 
@@ -35,6 +38,7 @@ public class RequestController {
     if (requestDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
+    requestDTO.setEmp_id(getAuthenticationUserID());
     return ResponseEntity.ok(requestService.update(requestDTO));
   }
 
@@ -53,19 +57,23 @@ public class RequestController {
   @ApiOperation(
       value = "Get all requests by employee ID",
       notes = "This method allows admin or user get all requests by employee ID")
-  @GetMapping("/user/all/{employeeId}")
+  @GetMapping("/user/all/send/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByEmployeeId(
       @PathVariable("employeeId") final Long employeeId) {
-    return ResponseEntity.ok(requestService.getAllByEmployeeId(employeeId));
+    return getAuthenticationUserID().equals(employeeId)
+        ? ResponseEntity.ok(requestService.getAllByEmployeeId(employeeId))
+        : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
 
   @ApiOperation(
       value = "Get all requests by admin ID",
       notes = "This method allows admin get all requests by admin ID")
-  @GetMapping("/admin/all/{adminId}")
+  @GetMapping("/user/all/get/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByAdminId(
-      @PathVariable("adminId") final Long adminId) {
-    return ResponseEntity.ok(requestService.getAllByAdminId(adminId));
+      @PathVariable("employeeId") final Long employeeId) {
+    return getAuthenticationUserID().equals(employeeId)
+        ? ResponseEntity.ok(requestService.getAllByAdminId(employeeId))
+        : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
 
   @ApiOperation(
@@ -75,5 +83,10 @@ public class RequestController {
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     requestService.deleteById(id);
     return ResponseEntity.ok(new MessageResponse("Request deleted"));
+  }
+
+  public Long getAuthenticationUserID() {
+    return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+        .getId();
   }
 }

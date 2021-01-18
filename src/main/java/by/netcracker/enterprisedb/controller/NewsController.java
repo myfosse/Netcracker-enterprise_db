@@ -3,9 +3,14 @@ package by.netcracker.enterprisedb.controller;
 import by.netcracker.enterprisedb.dto.model.NewsDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.NewsService;
+import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,7 +28,8 @@ public class NewsController {
 
   @ApiOperation(value = "Add news", notes = "This method allows admin add new news")
   @PostMapping("/admin/add")
-  public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final NewsDTO newsDTO) {
+  public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody NewsDTO newsDTO) {
+    newsDTO.setAdm_id(getAuthenticationUserID());
     return ResponseEntity.ok(newsService.save(newsDTO));
   }
 
@@ -33,6 +39,7 @@ public class NewsController {
     if (newsDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
+    newsDTO.setAdm_id(getAuthenticationUserID());
     return ResponseEntity.ok(newsService.update(newsDTO));
   }
 
@@ -62,5 +69,10 @@ public class NewsController {
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     newsService.deleteById(id);
     return ResponseEntity.ok(new MessageResponse("News deleted"));
+  }
+
+  public Long getAuthenticationUserID() {
+    return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+            .getId();
   }
 }

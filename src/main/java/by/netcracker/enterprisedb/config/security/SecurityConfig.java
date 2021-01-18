@@ -52,7 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             PREFIX + "/career/user/**",
             PREFIX + "/employee/user/**",
             PREFIX + "/holiday/user/**",
-            PREFIX + "/news/user/**",
             PREFIX + "/request/user/**}")
         .hasAuthority("ROLE_USER")
         .antMatchers(

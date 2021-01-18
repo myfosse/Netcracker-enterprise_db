@@ -39,6 +39,4 @@ public class Request extends BaseEntity {
 
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate sendDate;
-
-  private boolean agreed;
 }

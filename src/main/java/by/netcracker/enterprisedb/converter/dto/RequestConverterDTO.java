@@ -18,7 +18,6 @@ public class RequestConverterDTO {
             .title(requestEntity.getTitle())
             .text(requestEntity.getText())
             .sendDate(requestEntity.getSendDate())
-            .agreed(requestEntity.isAgreed())
             .build();
     requestDTO.setId(requestEntity.getId());
     return requestDTO;
@@ -34,7 +33,6 @@ public class RequestConverterDTO {
             .title(requestDTO.getTitle())
             .text(requestDTO.getText())
             .sendDate(requestDTO.getSendDate())
-            .agreed(requestDTO.isAgreed())
             .build();
     request.setId(requestDTO.getId());
     return request;

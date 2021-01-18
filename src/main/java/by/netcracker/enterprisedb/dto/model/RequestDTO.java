@@ -40,7 +40,4 @@ public class RequestDTO extends BaseDTO {
   @ApiModelProperty(position = 7, hidden = true)
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate sendDate;
-
-  @ApiModelProperty(position = 8, hidden = true)
-  private boolean agreed;
 }
