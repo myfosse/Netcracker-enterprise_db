@@ -110,7 +110,7 @@ public class PositionControllerIntegrationTest {
 
   @WithMockUser(authorities = "ROLE_ADMIN")
   @Test
-  public void deleteTest() throws Exception {
+  public void test_delete() throws Exception {
     mockMvc
         .perform(
             delete(path + "/admin/delete/1")

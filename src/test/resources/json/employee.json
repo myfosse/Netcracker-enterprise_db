@@ -7,6 +7,12 @@
     "amountOfHolidays": 1,
     "insuranceNumber": 1,
     "password": "String",
-    "roles": null
+    "roles": null,
+    "bonuses": null,
+    "careers": null,
+    "holidays": null,
+    "news": null,
+    "sentRequests": null,
+    "receivedRequests": null
   }
 ]

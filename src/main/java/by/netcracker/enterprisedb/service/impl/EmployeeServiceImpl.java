@@ -30,6 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Transactional
+  @Override
   public EmployeeDTO save(final Employee employee) {
     log.info("Save employee to DB");
     return EmployeeConverterDTO.convertEntityToDTO(employeeRepository.save(employee));
@@ -42,17 +43,17 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public EmployeeDTO save(EmployeeDTO object) {
+  public EmployeeDTO save(EmployeeDTO employeeDTO) {
     log.info("Save news to DB");
-    employeeRepository.save(EmployeeConverterDTO.convertDTOToEntity(object));
-    return object;
+    return EmployeeConverterDTO.convertEntityToDTO(
+        employeeRepository.save(EmployeeConverterDTO.convertDTOToEntity(employeeDTO)));
   }
 
   @Override
-  public EmployeeDTO update(EmployeeDTO object) {
+  public EmployeeDTO update(EmployeeDTO employeeDTO) {
     log.info("Save news to DB");
-    employeeRepository.save(EmployeeConverterDTO.convertDTOToEntity(object));
-    return object;
+    return EmployeeConverterDTO.convertEntityToDTO(
+        employeeRepository.save(EmployeeConverterDTO.convertDTOToEntity(employeeDTO)));
   }
 
   @Override
