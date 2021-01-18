@@ -15,6 +15,7 @@ public class NewsConverterDTO {
             .title(newsEntity.getTitle())
             .text(newsEntity.getText())
             .postDate(newsEntity.getPostDate())
+            .admId(newsEntity.getAdmin().getId())
             .build();
     newsDTO.setId(newsEntity.getId());
     return newsDTO;

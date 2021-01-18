@@ -16,6 +16,9 @@ public class CareerConverterDTO {
             .position(PositionConverterDTO.convertEntityToDTO(careerEntity.getPosition()))
             .startDate(careerEntity.getStartDate())
             .endDate(careerEntity.getEndDate())
+            .empId(careerEntity.getEmployee().getId())
+            .deptId(careerEntity.getDepartment().getId())
+            .posId(careerEntity.getPosition().getId())
             .build();
     careerDTO.setId(careerEntity.getId());
     return careerDTO;

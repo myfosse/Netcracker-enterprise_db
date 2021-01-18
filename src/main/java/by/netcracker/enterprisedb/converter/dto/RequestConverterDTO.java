@@ -16,6 +16,8 @@ public class RequestConverterDTO {
             .title(requestEntity.getTitle())
             .text(requestEntity.getText())
             .sendDate(requestEntity.getSendDate())
+            .empId(requestEntity.getEmployee().getId())
+            .admId(requestEntity.getAdmin().getId())
             .build();
     requestDTO.setId(requestEntity.getId());
     return requestDTO;

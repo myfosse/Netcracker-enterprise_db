@@ -14,6 +14,7 @@ public class HolidayConverterDTO {
             .employee(EmployeeConverterDTO.convertEntityToDTO(holidayEntity.getEmployee()))
             .startDate(holidayEntity.getStartDate())
             .endDate(holidayEntity.getEndDate())
+            .empId(holidayEntity.getEmployee().getId())
             .build();
     holidayDTO.setId(holidayEntity.getId());
     return holidayDTO;

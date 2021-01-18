@@ -15,6 +15,7 @@ public class BonusConverterDTO {
             .month(bonusEntity.getMonth())
             .year(bonusEntity.getYear())
             .value(bonusEntity.getValue())
+            .empId(bonusEntity.getEmployee().getId())
             .build();
     bonusDTO.setId(bonusEntity.getId());
     return bonusDTO;

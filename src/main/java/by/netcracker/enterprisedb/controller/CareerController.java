@@ -94,7 +94,7 @@ public class CareerController {
   }
 
   public Long getAuthenticationUserID() {
-    return !SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+    return SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
         ? ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
             .getId()
         : 0;
