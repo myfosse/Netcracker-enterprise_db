@@ -27,16 +27,16 @@ public class BonusServiceImpl implements BonusService {
   @Transactional
   public BonusDTO save(final BonusDTO bonus) {
     log.info("Save bonus to DB");
-    bonusRepository.save(BonusConverterDTO.convertDTOToEntity(bonus));
-    return bonus;
+    return BonusConverterDTO.convertEntityToDTO(
+        bonusRepository.save(BonusConverterDTO.convertDTOToEntity(bonus)));
   }
 
   @Override
   @Transactional
   public BonusDTO update(final BonusDTO bonus) {
     log.info("Update bonus in DB");
-    bonusRepository.save(BonusConverterDTO.convertDTOToEntity(bonus));
-    return bonus;
+    return BonusConverterDTO.convertEntityToDTO(
+        bonusRepository.save(BonusConverterDTO.convertDTOToEntity(bonus)));
   }
 
   @Override

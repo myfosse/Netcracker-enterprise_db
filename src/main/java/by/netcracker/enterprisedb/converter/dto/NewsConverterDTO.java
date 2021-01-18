@@ -12,7 +12,6 @@ public class NewsConverterDTO {
     NewsDTO newsDTO =
         NewsDTO.builder()
             .admin(EmployeeConverterDTO.convertEntityToDTO(newsEntity.getAdmin()))
-            .adm_id(newsEntity.getAdm_id())
             .title(newsEntity.getTitle())
             .text(newsEntity.getText())
             .postDate(newsEntity.getPostDate())
@@ -25,7 +24,6 @@ public class NewsConverterDTO {
     News news =
         News.builder()
             .admin(EmployeeConverterDTO.convertDTOToEntity(newsDTO.getAdmin()))
-            .adm_id(newsDTO.getAdm_id())
             .title(newsDTO.getTitle())
             .text(newsDTO.getText())
             .postDate(newsDTO.getPostDate())

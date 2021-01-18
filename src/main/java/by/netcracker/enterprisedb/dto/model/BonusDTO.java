@@ -19,7 +19,7 @@ public class BonusDTO extends BaseDTO {
 
   @ApiModelProperty(position = 2)
   @Positive(message = "Employee ID must be positive")
-  private Long emp_id;
+  private Long empId;
 
   @ApiModelProperty(position = 3)
   @Min(value = 1, message = "The month must be between 1 and 12")

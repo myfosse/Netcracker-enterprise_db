@@ -20,9 +20,6 @@ public class News extends BaseEntity {
   @JoinColumn(name = "adm_id")
   private Employee admin;
 
-  @Column(insertable = false, updatable = false)
-  private Long adm_id;
-
   private String title;
 
   private String text;

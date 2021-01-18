@@ -27,16 +27,16 @@ public class NewsServiceImpl implements NewsService {
   @Transactional
   public NewsDTO save(final NewsDTO news) {
     log.info("Save news to DB");
-    newsRepository.save(NewsConverterDTO.convertDTOToEntity(news));
-    return news;
+    return NewsConverterDTO.convertEntityToDTO(
+        newsRepository.save(NewsConverterDTO.convertDTOToEntity(news)));
   }
 
   @Override
   @Transactional
   public NewsDTO update(final NewsDTO news) {
     log.info("Update news in DB");
-    newsRepository.save(NewsConverterDTO.convertDTOToEntity(news));
-    return news;
+    return NewsConverterDTO.convertEntityToDTO(
+        newsRepository.save(NewsConverterDTO.convertDTOToEntity(news)));
   }
 
   @Override

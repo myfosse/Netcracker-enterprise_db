@@ -3,6 +3,7 @@ package by.netcracker.enterprisedb.controller;
 import by.netcracker.enterprisedb.dto.model.BonusDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.BonusService;
+import by.netcracker.enterprisedb.service.EmployeeService;
 import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,12 @@ import javax.validation.Valid;
 public class BonusController {
 
   private final BonusService bonusService;
+  private final EmployeeService employeeService;
 
   @Autowired
-  public BonusController(final BonusService bonusService) {
+  public BonusController(final BonusService bonusService, final EmployeeService employeeService) {
     this.bonusService = bonusService;
+    this.employeeService = employeeService;
   }
 
   @ApiOperation(
@@ -30,6 +33,7 @@ public class BonusController {
       notes = "This method allows admin add new bonus for employee")
   @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final BonusDTO bonusDTO) {
+    bonusDTO.setEmployee(employeeService.findById(bonusDTO.getEmpId()));
     return ResponseEntity.ok(bonusService.save(bonusDTO));
   }
 
@@ -41,6 +45,7 @@ public class BonusController {
     if (bonusDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
+    bonusDTO.setEmployee(employeeService.findById(bonusDTO.getEmpId()));
     return ResponseEntity.ok(bonusService.update(bonusDTO));
   }
 
@@ -62,7 +67,7 @@ public class BonusController {
   @GetMapping("/user/all/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByEmployeeID(
       @PathVariable("employeeId") final Long employeeId) {
-    return getAuthenticationUserID().equals(employeeId)
+    return (getAuthenticationUserID().equals(employeeId) && getAuthenticationUserID() > 0)
         ? ResponseEntity.ok(bonusService.getAllByEmployeeId(employeeId))
         : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
@@ -75,7 +80,9 @@ public class BonusController {
   }
 
   public Long getAuthenticationUserID() {
-    return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-        .getId();
+    return !SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+        ? ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+            .getId()
+        : 0;
   }
 }

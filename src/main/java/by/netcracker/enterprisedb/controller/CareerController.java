@@ -3,6 +3,9 @@ package by.netcracker.enterprisedb.controller;
 import by.netcracker.enterprisedb.dto.model.CareerDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.CareerService;
+import by.netcracker.enterprisedb.service.DepartmentService;
+import by.netcracker.enterprisedb.service.EmployeeService;
+import by.netcracker.enterprisedb.service.PositionService;
 import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +20,20 @@ import javax.validation.Valid;
 public class CareerController {
 
   private final CareerService careerService;
+  private final EmployeeService employeeService;
+  private final DepartmentService departmentService;
+  private final PositionService positionService;
 
   @Autowired
-  public CareerController(final CareerService careerService) {
+  public CareerController(
+      final CareerService careerService,
+      final EmployeeService employeeService,
+      final DepartmentService departmentService,
+      final PositionService positionService) {
     this.careerService = careerService;
+    this.employeeService = employeeService;
+    this.departmentService = departmentService;
+    this.positionService = positionService;
   }
 
   @ApiOperation(
@@ -28,6 +41,9 @@ public class CareerController {
       notes = "This method allows admin add new career for employee")
   @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final CareerDTO careerDTO) {
+    careerDTO.setDepartment(departmentService.findById(careerDTO.getDeptId()));
+    careerDTO.setPosition(positionService.findById(careerDTO.getPosId()));
+    careerDTO.setEmployee(employeeService.findById(careerDTO.getEmpId()));
     return ResponseEntity.ok(careerService.save(careerDTO));
   }
 
@@ -39,6 +55,9 @@ public class CareerController {
     if (careerDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
+    careerDTO.setDepartment(departmentService.findById(careerDTO.getDeptId()));
+    careerDTO.setPosition(positionService.findById(careerDTO.getPosId()));
+    careerDTO.setEmployee(employeeService.findById(careerDTO.getEmpId()));
     return ResponseEntity.ok(careerService.update(careerDTO));
   }
 
@@ -60,9 +79,9 @@ public class CareerController {
   @GetMapping("/user/all/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByEmployeeID(
       @PathVariable("employeeId") final Long employeeId) {
-    return getAuthenticationUserID().equals(employeeId)
-            ? ResponseEntity.ok(careerService.getAllByEmployeeId(employeeId))
-            : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
+    return (getAuthenticationUserID().equals(employeeId) && getAuthenticationUserID() > 0)
+        ? ResponseEntity.ok(careerService.getAllByEmployeeId(employeeId))
+        : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
 
   @ApiOperation(
@@ -75,7 +94,9 @@ public class CareerController {
   }
 
   public Long getAuthenticationUserID() {
-    return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-            .getId();
+    return !SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+        ? ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+            .getId()
+        : 0;
   }
 }

@@ -55,6 +55,7 @@ public class AuthController {
 
     employeeDTO.setRoles(Set.of(userRole));
     employeeDTO.setPassword(encoder.encode(employeeDTO.getPassword()));
+    employeeDTO.setAmountOfHolidays(0);
 
     return ResponseEntity.ok(employeeService.save(employeeDTO));
   }

@@ -20,7 +20,7 @@ public class HolidayDTO extends BaseDTO {
 
   @ApiModelProperty(position = 2)
   @Positive(message = "Employee ID must be positive")
-  private Long emp_id;
+  private Long empId;
 
   @ApiModelProperty(position = 3)
   @JsonFormat(pattern = "yyyy-MM-dd")

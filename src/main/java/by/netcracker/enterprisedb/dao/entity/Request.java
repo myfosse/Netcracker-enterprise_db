@@ -25,12 +25,6 @@ public class Request extends BaseEntity {
   @JoinColumn(name = "adm_id")
   private Employee admin;
 
-  @Column(insertable = false, updatable = false)
-  private Long emp_id;
-
-  @Column(insertable = false, updatable = false)
-  private Long adm_id;
-
   @NotBlank
   private String title;
 

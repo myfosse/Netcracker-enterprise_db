@@ -12,7 +12,6 @@ public class BonusConverterDTO {
     BonusDTO bonusDTO =
         BonusDTO.builder()
             .employee(EmployeeConverterDTO.convertEntityToDTO(bonusEntity.getEmployee()))
-            .emp_id(bonusEntity.getEmp_id())
             .month(bonusEntity.getMonth())
             .year(bonusEntity.getYear())
             .value(bonusEntity.getValue())
@@ -25,7 +24,6 @@ public class BonusConverterDTO {
     Bonus bonus =
         Bonus.builder()
             .employee(EmployeeConverterDTO.convertDTOToEntity(bonusDTO.getEmployee()))
-                .emp_id(bonusDTO.getEmp_id())
             .month(bonusDTO.getMonth())
             .year(bonusDTO.getYear())
             .value(bonusDTO.getValue())

@@ -2,13 +2,11 @@ package by.netcracker.enterprisedb.controller;
 
 import by.netcracker.enterprisedb.dto.model.HolidayDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
+import by.netcracker.enterprisedb.service.EmployeeService;
 import by.netcracker.enterprisedb.service.HolidayService;
-import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,10 +16,13 @@ import javax.validation.Valid;
 public class HolidayController {
 
   private final HolidayService holidayService;
+  private final EmployeeService employeeService;
 
   @Autowired
-  public HolidayController(final HolidayService holidayService) {
+  public HolidayController(
+      final HolidayService holidayService, final EmployeeService employeeService) {
     this.holidayService = holidayService;
+    this.employeeService = employeeService;
   }
 
   @ApiOperation(
@@ -29,6 +30,7 @@ public class HolidayController {
       notes = "This method allows admin add new holiday for employee")
   @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody final HolidayDTO holidayDTO) {
+    holidayDTO.setEmployee(employeeService.findById(holidayDTO.getEmpId()));
     return ResponseEntity.ok(holidayService.save(holidayDTO));
   }
 
@@ -40,6 +42,7 @@ public class HolidayController {
     if (holidayDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
+    holidayDTO.setEmployee(employeeService.findById(holidayDTO.getEmpId()));
     return ResponseEntity.ok(holidayService.update(holidayDTO));
   }
 
@@ -71,7 +74,7 @@ public class HolidayController {
       notes = "This method allows admin or user get all finished holidays")
   @GetMapping("/user/finished")
   public @ResponseBody ResponseEntity<?> getAllFinishedHolidays(
-      @Param(value = "finished") final boolean finished) {
+      @RequestParam(value = "finished") final boolean finished) {
     return ResponseEntity.ok(
         finished
             ? holidayService.getAllFinishedHolidays()

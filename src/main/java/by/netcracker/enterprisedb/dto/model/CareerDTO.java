@@ -26,15 +26,15 @@ public class CareerDTO extends BaseDTO {
 
   @ApiModelProperty(position = 4)
   @Positive(message = "Employee ID must be positive")
-  private Long emp_id;
+  private Long empId;
 
   @ApiModelProperty(position = 5)
   @Positive(message = "Department ID must be positive")
-  private Long dept_id;
+  private Long deptId;
 
   @ApiModelProperty(position = 6)
   @Positive(message = "Position ID must be positive")
-  private Long pos_id;
+  private Long posId;
 
   @ApiModelProperty(position = 7)
   @JsonFormat(pattern = "yyyy-MM-dd")

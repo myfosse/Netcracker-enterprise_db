@@ -20,7 +20,7 @@ public class NewsDTO extends BaseDTO {
 
   @ApiModelProperty(position = 2)
   @Positive(message = "Admin ID must be positive")
-  private Long adm_id;
+  private Long admId;
 
   @NotBlank
   @ApiModelProperty(position = 3)

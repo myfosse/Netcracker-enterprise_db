@@ -1,5 +1,6 @@
 package by.netcracker.enterprisedb.service.impl;
 
+import by.netcracker.enterprisedb.converter.dto.NewsConverterDTO;
 import by.netcracker.enterprisedb.converter.dto.PositionConverterDTO;
 import by.netcracker.enterprisedb.dao.repository.PositionRepository;
 import by.netcracker.enterprisedb.dto.model.PositionDTO;
@@ -27,16 +28,16 @@ public class PositionServiceImpl implements PositionService {
   @Transactional
   public PositionDTO save(final PositionDTO position) {
     log.info("Save position to DB");
-    positionRepository.save(PositionConverterDTO.convertDTOToEntity(position));
-    return position;
+    return PositionConverterDTO.convertEntityToDTO(
+        positionRepository.save(PositionConverterDTO.convertDTOToEntity(position)));
   }
 
   @Override
   @Transactional
   public PositionDTO update(final PositionDTO position) {
     log.info("Update position in DB");
-    positionRepository.save(PositionConverterDTO.convertDTOToEntity(position));
-    return position;
+    return PositionConverterDTO.convertEntityToDTO(
+        positionRepository.save(PositionConverterDTO.convertDTOToEntity(position)));
   }
 
   @Override

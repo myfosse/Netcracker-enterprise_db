@@ -6,11 +6,9 @@ import by.netcracker.enterprisedb.dto.model.EmployeeDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
 import by.netcracker.enterprisedb.service.EmployeeService;
 import by.netcracker.enterprisedb.service.RoleService;
-import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,6 +63,10 @@ public class EmployeeController {
   @PutMapping("/admin/update")
   public @ResponseBody ResponseEntity<?> update(@Valid @RequestBody final EmployeeDTO employeeDTO) {
 
+    if (employeeDTO.getId() == null) {
+      return ResponseEntity.badRequest().body("Unknown id");
+    }
+
     if (employeeService.existsByEmail(employeeDTO.getEmail())) {
       return ResponseEntity.badRequest().body(("Error: Email is already in use!"));
     }
@@ -103,9 +105,7 @@ public class EmployeeController {
     return ResponseEntity.ok(employeeService.getAll());
   }
 
-  @ApiOperation(
-      value = "Delete employee",
-      notes = "This method allows admin delete employee by ID")
+  @ApiOperation(value = "Delete employee", notes = "This method allows admin delete employee by ID")
   @DeleteMapping("/admin/delete/{id}")
   public @ResponseBody ResponseEntity<?> deleteById(@PathVariable("id") final Long id) {
     employeeService.deleteById(id);

@@ -23,11 +23,11 @@ public class RequestDTO extends BaseDTO {
 
   @ApiModelProperty(position = 3)
   @Positive(message = "Employee ID must be positive")
-  private Long emp_id;
+  private Long empId;
 
   @ApiModelProperty(position = 4)
   @Positive(message = "Admin ID must be positive")
-  private Long adm_id;
+  private Long admId;
 
   @ApiModelProperty(position = 5)
   @NotBlank

@@ -48,11 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 PREFIX + "/position/all/**")
         .permitAll()
         .antMatchers(
-            PREFIX + "/bonus/user/**}",
+            PREFIX + "/bonus/user/**",
             PREFIX + "/career/user/**",
             PREFIX + "/employee/user/**",
             PREFIX + "/holiday/user/**",
-            PREFIX + "/request/user/**}")
+            PREFIX + "/request/user/**")
         .hasAuthority("ROLE_USER")
         .antMatchers(
             PREFIX + "/bonus/admin/**",

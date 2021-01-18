@@ -20,9 +20,6 @@ public class Holiday extends BaseEntity {
   @JoinColumn(name = "emp_id")
   private Employee employee;
 
-  @Column(insertable = false, updatable = false)
-  private Long emp_id;
-
   @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate startDate;
 

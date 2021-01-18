@@ -27,16 +27,16 @@ public class RequestServiceImpl implements RequestService {
   @Transactional
   public RequestDTO save(final RequestDTO request) {
     log.info("Save request to DB");
-    requestRepository.save(RequestConverterDTO.convertDTOToEntity(request));
-    return request;
+    return RequestConverterDTO.convertEntityToDTO(
+        requestRepository.save(RequestConverterDTO.convertDTOToEntity(request)));
   }
 
   @Override
   @Transactional
   public RequestDTO update(final RequestDTO request) {
     log.info("Update request in DB");
-    requestRepository.save(RequestConverterDTO.convertDTOToEntity(request));
-    return request;
+    return RequestConverterDTO.convertEntityToDTO(
+        requestRepository.save(RequestConverterDTO.convertDTOToEntity(request)));
   }
 
   @Override

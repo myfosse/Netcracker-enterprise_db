@@ -27,16 +27,16 @@ public class DepartmentServiceImpl implements DepartmentService {
   @Transactional
   public DepartmentDTO save(final DepartmentDTO department) {
     log.info("Save department to DB");
-    departmentRepository.save(DepartmentConverterDTO.convertDTOToEntity(department));
-    return department;
+    return DepartmentConverterDTO.convertEntityToDTO(
+        departmentRepository.save(DepartmentConverterDTO.convertDTOToEntity(department)));
   }
 
   @Override
   @Transactional
   public DepartmentDTO update(final DepartmentDTO department) {
     log.info("Update department in DB");
-    departmentRepository.save(DepartmentConverterDTO.convertDTOToEntity(department));
-    return department;
+    return DepartmentConverterDTO.convertEntityToDTO(
+        departmentRepository.save(DepartmentConverterDTO.convertDTOToEntity(department)));
   }
 
   @Override

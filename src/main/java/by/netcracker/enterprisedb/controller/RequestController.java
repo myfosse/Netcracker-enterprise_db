@@ -2,6 +2,7 @@ package by.netcracker.enterprisedb.controller;
 
 import by.netcracker.enterprisedb.dto.model.RequestDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
+import by.netcracker.enterprisedb.service.EmployeeService;
 import by.netcracker.enterprisedb.service.RequestService;
 import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
@@ -17,10 +18,13 @@ import javax.validation.Valid;
 public class RequestController {
 
   private final RequestService requestService;
+  private final EmployeeService employeeService;
 
   @Autowired
-  public RequestController(final RequestService requestService) {
+  public RequestController(
+      final RequestService requestService, final EmployeeService employeeService) {
     this.requestService = requestService;
+    this.employeeService = employeeService;
   }
 
   @ApiOperation(
@@ -28,7 +32,7 @@ public class RequestController {
       notes = "This method allows admin or user add new request")
   @PostMapping("/user/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody RequestDTO requestDTO) {
-    requestDTO.setEmp_id(getAuthenticationUserID());
+    requestDTO.setAdmin(employeeService.findById(getAuthenticationUserID()));
     return ResponseEntity.ok(requestService.save(requestDTO));
   }
 
@@ -38,7 +42,7 @@ public class RequestController {
     if (requestDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
-    requestDTO.setEmp_id(getAuthenticationUserID());
+    requestDTO.setAdmin(employeeService.findById(getAuthenticationUserID()));
     return ResponseEntity.ok(requestService.update(requestDTO));
   }
 
@@ -60,7 +64,7 @@ public class RequestController {
   @GetMapping("/user/all/send/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByEmployeeId(
       @PathVariable("employeeId") final Long employeeId) {
-    return getAuthenticationUserID().equals(employeeId)
+    return (getAuthenticationUserID().equals(employeeId) && getAuthenticationUserID() > 0)
         ? ResponseEntity.ok(requestService.getAllByEmployeeId(employeeId))
         : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
@@ -71,7 +75,7 @@ public class RequestController {
   @GetMapping("/user/all/get/{employeeId}")
   public @ResponseBody ResponseEntity<?> getAllByAdminId(
       @PathVariable("employeeId") final Long employeeId) {
-    return getAuthenticationUserID().equals(employeeId)
+    return (getAuthenticationUserID().equals(employeeId) && getAuthenticationUserID() > 0)
         ? ResponseEntity.ok(requestService.getAllByAdminId(employeeId))
         : ResponseEntity.badRequest().body(new MessageResponse("You have no right"));
   }
@@ -86,7 +90,9 @@ public class RequestController {
   }
 
   public Long getAuthenticationUserID() {
-    return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-        .getId();
+    return !SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+        ? ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+            .getId()
+        : 0;
   }
 }

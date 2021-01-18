@@ -32,15 +32,13 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Transactional
   public EmployeeDTO save(final Employee employee) {
     log.info("Save employee to DB");
-    employeeRepository.save(employee);
-    return EmployeeConverterDTO.convertEntityToDTO(employee);
+    return EmployeeConverterDTO.convertEntityToDTO(employeeRepository.save(employee));
   }
 
   @Transactional
   public EmployeeDTO update(final Employee employee) {
     log.info("Update employee in DB");
-    employeeRepository.save(employee);
-    return EmployeeConverterDTO.convertEntityToDTO(employee);
+    return EmployeeConverterDTO.convertEntityToDTO(employeeRepository.save(employee));
   }
 
   @Override

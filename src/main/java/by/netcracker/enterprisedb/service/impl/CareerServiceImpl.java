@@ -27,16 +27,16 @@ public class CareerServiceImpl implements CareerService {
   @Transactional
   public CareerDTO save(final CareerDTO career) {
     log.info("Save career to DB");
-    careerRepository.save(CareerConverterDTO.convertDTOToEntity(career));
-    return career;
+    return CareerConverterDTO.convertEntityToDTO(
+        careerRepository.save(CareerConverterDTO.convertDTOToEntity(career)));
   }
 
   @Override
   @Transactional
   public CareerDTO update(final CareerDTO career) {
     log.info("Update career in DB");
-    careerRepository.save(CareerConverterDTO.convertDTOToEntity(career));
-    return career;
+    return CareerConverterDTO.convertEntityToDTO(
+        careerRepository.save(CareerConverterDTO.convertDTOToEntity(career)));
   }
 
   @Override

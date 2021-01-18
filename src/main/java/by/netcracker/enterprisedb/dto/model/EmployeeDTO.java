@@ -2,7 +2,6 @@ package by.netcracker.enterprisedb.dto.model;
 
 import by.netcracker.enterprisedb.dao.entity.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -61,7 +60,5 @@ public class EmployeeDTO extends BaseDTO {
   private String passwordConfirmation;
 
   @ApiModelProperty(position = 9, hidden = true)
-  @NotBlank
-  @NotNull
   private Set<Role> roles;
 }

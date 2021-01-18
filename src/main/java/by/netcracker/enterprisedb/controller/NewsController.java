@@ -2,15 +2,13 @@ package by.netcracker.enterprisedb.controller;
 
 import by.netcracker.enterprisedb.dto.model.NewsDTO;
 import by.netcracker.enterprisedb.payload.response.MessageResponse;
+import by.netcracker.enterprisedb.service.EmployeeService;
 import by.netcracker.enterprisedb.service.NewsService;
 import by.netcracker.enterprisedb.service.impl.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,16 +18,18 @@ import javax.validation.Valid;
 public class NewsController {
 
   private final NewsService newsService;
+  private final EmployeeService employeeService;
 
   @Autowired
-  public NewsController(final NewsService newsService) {
+  public NewsController(final NewsService newsService, final EmployeeService employeeService) {
     this.newsService = newsService;
+    this.employeeService = employeeService;
   }
 
   @ApiOperation(value = "Add news", notes = "This method allows admin add new news")
   @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody NewsDTO newsDTO) {
-    newsDTO.setAdm_id(getAuthenticationUserID());
+    newsDTO.setAdmin(employeeService.findById(getAuthenticationUserID()));
     return ResponseEntity.ok(newsService.save(newsDTO));
   }
 
@@ -39,7 +39,7 @@ public class NewsController {
     if (newsDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
-    newsDTO.setAdm_id(getAuthenticationUserID());
+    newsDTO.setAdmin(employeeService.findById(getAuthenticationUserID()));
     return ResponseEntity.ok(newsService.update(newsDTO));
   }
 
@@ -58,7 +58,7 @@ public class NewsController {
   @ApiOperation(
       value = "Get all news by admin ID",
       notes = "This method allows everyone get news by admin ID")
-  @GetMapping("/all/{adminId}")
+  @GetMapping("/all/admin/{adminId}")
   public @ResponseBody ResponseEntity<?> getAllByAdminId(
       @PathVariable("adminId") final Long adminId) {
     return ResponseEntity.ok(newsService.getAllByAdminId(adminId));
@@ -73,6 +73,6 @@ public class NewsController {
 
   public Long getAuthenticationUserID() {
     return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-            .getId();
+        .getId();
   }
 }

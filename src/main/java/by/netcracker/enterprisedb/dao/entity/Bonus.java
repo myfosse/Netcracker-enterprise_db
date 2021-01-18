@@ -18,9 +18,6 @@ public class Bonus extends BaseEntity {
   @JoinColumn(name = "emp_id")
   private Employee employee;
 
-  @Column(insertable = false, updatable = false)
-  private Long emp_id;
-
   private int month;
 
   private int year;

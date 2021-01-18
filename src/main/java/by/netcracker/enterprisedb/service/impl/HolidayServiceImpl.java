@@ -27,16 +27,16 @@ public class HolidayServiceImpl implements HolidayService {
   @Transactional
   public HolidayDTO save(final HolidayDTO holiday) {
     log.info("Save holiday to DB");
-    holidayRepository.save(HolidayConverterDTO.convertDTOToEntity(holiday));
-    return holiday;
+    return HolidayConverterDTO.convertEntityToDTO(
+        holidayRepository.save(HolidayConverterDTO.convertDTOToEntity(holiday)));
   }
 
   @Override
   @Transactional
   public HolidayDTO update(final HolidayDTO holiday) {
     log.info("Update holiday in DB");
-    holidayRepository.save(HolidayConverterDTO.convertDTOToEntity(holiday));
-    return holiday;
+    return HolidayConverterDTO.convertEntityToDTO(
+        holidayRepository.save(HolidayConverterDTO.convertDTOToEntity(holiday)));
   }
 
   @Override
