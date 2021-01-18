@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -34,9 +33,9 @@ public class CareerServiceTest extends BaseServiceTest<Career, CareerDTO> {
           new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null),
           new DepartmentDTO("Department", "Belarus", "Minsk"),
           new PositionDTO("Java", 1500),
-          1L,
-          1L,
-          1L,
+              null,
+              null,
+              null,
           null,
           null);
 

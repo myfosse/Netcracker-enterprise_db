@@ -32,7 +32,7 @@ public class BonusServiceTest extends BaseServiceTest<Bonus, BonusDTO> {
   private final BonusDTO outputBonusDTO =
       new BonusDTO(
           new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null),
-          1L,
+          null,
           1,
           1,
           1);

@@ -8,7 +8,13 @@
       "amountOfHolidays": 1,
       "insuranceNumber": 1,
       "password": "String",
-      "roles": null
+      "roles": null,
+      "bonuses": null,
+      "careers": null,
+      "holidays": null,
+      "news": null,
+      "sentRequests": null,
+      "receivedRequests": null
     },
     "admin": {
       "name": "String",
@@ -18,10 +24,14 @@
       "amountOfHolidays": 1,
       "insuranceNumber": 1,
       "password": "String",
-      "roles": null
+      "roles": null,
+      "bonuses": null,
+      "careers": null,
+      "holidays": null,
+      "news": null,
+      "sentRequests": null,
+      "receivedRequests": null
     },
-    "emp_id": 1,
-    "adm_id": 1,
     "title": "Title",
     "text": "Text",
     "sendDate": null

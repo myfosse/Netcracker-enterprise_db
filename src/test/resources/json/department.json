@@ -2,6 +2,7 @@
   {
     "name": "Department",
     "country": "Belarus",
-    "city": "Minsk"
+    "city": "Minsk",
+    "careers": null
   }
 ]

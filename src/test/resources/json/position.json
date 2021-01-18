@@ -1,6 +1,7 @@
 [
   {
     "specialty": "Java",
-    "minSalary": 1500
+    "minSalary": 1500,
+    "careers": null
   }
 ]

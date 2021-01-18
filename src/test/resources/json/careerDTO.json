@@ -8,7 +8,13 @@
       "amountOfHolidays": 1,
       "insuranceNumber": 1,
       "password": "String",
-      "roles": null
+      "roles": null,
+      "bonuses": null,
+      "careers": null,
+      "holidays": null,
+      "news": null,
+      "sentRequests": null,
+      "receivedRequests": null
     },
     "department": {
       "name": "Department",
@@ -19,9 +25,6 @@
       "specialty": "Java",
       "minSalary": 1500
     },
-    "emp_id": 1,
-    "dept_id": 1,
-    "pos_id": 1,
     "startDate": null,
     "endDate": null
   }

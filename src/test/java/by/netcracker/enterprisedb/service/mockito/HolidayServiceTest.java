@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +35,7 @@ public class HolidayServiceTest extends BaseServiceTest<Holiday, HolidayDTO> {
   private final HolidayDTO holidayDTO =
       new HolidayDTO(
           new EmployeeDTO("String", "String", "String@mail.ru", null, 1, 1, "String", null, null),
-          1L,
+              null,
           null,
           null);
 

@@ -8,20 +8,25 @@
       "amountOfHolidays": 1,
       "insuranceNumber": 1,
       "password": "String",
-      "roles": null
+      "roles": null,
+      "bonuses": null,
+      "careers": null,
+      "holidays": null,
+      "news": null,
+      "sentRequests": null,
+      "receivedRequests": null
     },
     "department": {
       "name": "Department",
       "country": "Belarus",
-      "city": "Minsk"
+      "city": "Minsk",
+      "careers": null
     },
     "position": {
       "specialty": "Java",
-      "minSalary": 1500
+      "minSalary": 1500,
+      "careers": null
     },
-    "emp_id": 1,
-    "dept_id": 1,
-    "pos_id": 1,
     "startDate": null,
     "endDate": null
   }
