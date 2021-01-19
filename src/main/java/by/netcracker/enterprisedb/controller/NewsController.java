@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/news")
@@ -29,6 +30,7 @@ public class NewsController {
   @ApiOperation(value = "Add news", notes = "This method allows admin add new news")
   @PostMapping("/admin/add")
   public @ResponseBody ResponseEntity<?> add(@Valid @RequestBody NewsDTO newsDTO) {
+    newsDTO.setPostDate(LocalDate.now());
     newsDTO.setAdmin(employeeService.findById(getAuthenticationUserID()));
     return ResponseEntity.ok(newsService.save(newsDTO));
   }
@@ -39,6 +41,7 @@ public class NewsController {
     if (newsDTO.getId() == null) {
       return ResponseEntity.badRequest().body("Unknown id");
     }
+    newsDTO.setPostDate(LocalDate.now());
     newsDTO.setAdmin(employeeService.findById(getAuthenticationUserID()));
     return ResponseEntity.ok(newsService.update(newsDTO));
   }
