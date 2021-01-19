@@ -22,7 +22,7 @@ public class SwaggerConfig {
 
   public ApiInfo apiInfo() {
     return new ApiInfoBuilder()
-        .title("Enterprise")
+        .title("Enterprise DB")
         .description("Project for NetCracker")
         .license("No license")
         .licenseUrl("http://unlicense.org")
